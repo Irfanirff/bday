@@ -3,207 +3,844 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Niharika</title>
+    <title>Happy Birthday Niharika ♡</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
     <style>
-        /* Base Styles & Background */
-        body { 
-            background-color: #FDFBF7; 
-            font-family: 'Georgia', serif; 
-            color: #4A4543; 
-            text-align: center; 
-            margin: 0; 
-            padding: 0; 
+        :root {
+            --bg-color: #FBF8F5;
+            --card-bg: #FFFFFF;
+            --text-main: #3C3633;
+            --text-muted: #8E827C;
+            --accent-pink: #E89BA4;
+            --accent-pink-hover: #D8838D;
+            --seal-red: #B84A54;
+            --envelope-bg: #F4EAE0;
+            --envelope-flap: #ECDCCF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* Screen Transitions & Animations */
-        .screen { 
-            display: none; 
-            min-height: 100vh; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 20px; 
-            box-sizing: border-box; 
+        /* Floating background petals */
+        .petals-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
         }
-        .screen.active { 
-            display: flex; 
-            animation: fadeInSlideUp 0.8s ease-out forwards; 
+        .petal {
+            position: absolute;
+            background: radial-gradient(circle, #ffd1d7 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50% 0 50% 50%;
+            opacity: 0.45;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
-        @keyframes fadeInSlideUp { 
-            0% { opacity: 0; transform: translateY(30px); } 
-            100% { opacity: 1; transform: translateY(0); } 
+        /* Main Container Phone/Tablet Mockup Frame */
+        .app-viewport {
+            width: 100%;
+            max-width: 440px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Typography */
-        h1 { 
-            font-size: 2.8em; 
-            margin-bottom: 5px; 
-            font-weight: normal; 
-            color: #3b3634;
+        /* Screen Management */
+        .screen {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.96) translateY(15px);
+            transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
-        .subtitle { 
-            font-family: 'Arial', sans-serif;
+        .screen.active {
+            display: flex;
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        /* Common Elements */
+        .pill-tag {
+            background-color: #F8EBEB;
+            color: #C07079;
+            font-size: 0.72rem;
             letter-spacing: 2px;
-            font-size: 0.8em; 
-            color: #bfa5a6; 
-            margin-bottom: 20px; 
+            padding: 5px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        h1.serif-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #2D2725;
+            margin-bottom: 2px;
+            font-weight: 500;
+        }
+        p.cursive-sub {
+            font-family: 'Caveat', cursive;
+            font-size: 1.5rem;
+            color: var(--accent-pink);
+            margin-bottom: 22px;
+        }
+        .primary-btn {
+            background-color: var(--accent-pink);
+            color: white;
+            border: none;
+            padding: 13px 28px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 8px 18px rgba(232, 155, 164, 0.35);
+            transition: all 0.3s ease;
+            margin-top: 24px;
+        }
+        .primary-btn:hover {
+            background-color: var(--accent-pink-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(232, 155, 164, 0.45);
+        }
+
+        /* ---------------- SCREEN 1: ENVELOPE ---------------- */
+        .cat-gif-hero {
+            width: 90px;
+            height: 90px;
+            margin-bottom: 15px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 250px;
+            height: 165px;
+            background: var(--envelope-bg);
+            border-radius: 8px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.06);
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.3s;
+        }
+        .envelope-wrapper:hover {
+            transform: translateY(-4px);
+        }
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 125px solid transparent;
+            border-right: 125px solid transparent;
+            border-top: 95px solid var(--envelope-flap);
+            transform-origin: top;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 3;
+        }
+        .envelope-pocket {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 125px solid #F8EDE4;
+            border-right: 125px solid #F8EDE4;
+            border-bottom: 95px solid #F1E2D4;
+            border-radius: 0 0 8px 8px;
+            z-index: 2;
+        }
+        .wax-seal {
+            position: absolute;
+            top: 75px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 44px;
+            height: 44px;
+            background-color: var(--seal-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            z-index: 4;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.3s;
+        }
+        .wax-seal:hover {
+            transform: translate(-50%, -50%) scale(1.08);
+        }
+        .seal-instruction {
+            margin-top: 24px;
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            color: #A39690;
             text-transform: uppercase;
         }
-        .cursive-subtitle {
-            font-style: italic; 
-            color: #d19597; 
-            margin-bottom: 30px; 
-            font-size: 1.5em;
+
+        /* ---------------- SCREEN 2: GREETING & MUSIC ---------------- */
+        .avatar-circle {
+            width: 85px;
+            height: 85px;
+            background: white;
+            border-radius: 50%;
+            padding: 5px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            margin-bottom: 8px;
+        }
+        .avatar-circle img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
-        /* Interactive Elements */
-        .envelope-container { 
-            cursor: pointer; 
-            transition: transform 0.3s; 
-            margin-top: 20px;
+        .note-card {
+            background: white;
+            width: 100%;
+            padding: 26px 22px;
+            border-radius: 18px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.03);
+            margin-top: 10px;
         }
-        .envelope-container:hover { 
-            transform: scale(1.05) translateY(-5px); 
-        }
-        .envelope { 
-            font-size: 120px; 
-            margin: 0; 
-            filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.05));
+        .note-text {
+            font-size: 0.88rem;
+            line-height: 1.7;
+            color: #645C57;
+            margin-bottom: 20px;
         }
 
-        .btn { 
-            background-color: #e59a9c; 
-            color: white; 
-            border: none; 
-            padding: 15px 30px; 
-            border-radius: 30px; 
-            font-size: 1em; 
-            cursor: pointer; 
-            margin-top: 30px; 
-            transition: background 0.3s, transform 0.2s; 
-            box-shadow: 0 4px 15px rgba(229, 154, 156, 0.4);
-            font-family: 'Arial', sans-serif;
+        .music-bar {
+            background: #FDF9F9;
+            border: 1px solid #F5E8E9;
+            border-radius: 14px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .music-details {
+            text-align: left;
+        }
+        .music-title {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #403835;
+        }
+        .music-sub {
+            font-size: 0.68rem;
             letter-spacing: 1px;
+            color: var(--accent-pink);
+            text-transform: uppercase;
         }
-        .btn:hover { 
-            background-color: #d18587; 
-            transform: scale(1.05);
-        }
-
-        /* Message Boxes & UI Components */
-        .message-box { 
-            background: white; 
-            padding: 30px; 
-            border-radius: 15px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.03); 
-            max-width: 450px; 
-            line-height: 1.8; 
-            font-family: 'Arial', sans-serif;
-            font-size: 0.95em;
-            color: #666;
-            margin-top: 20px;
-        }
-
-        .music-player { 
-            background: #fdf6f6; 
-            padding: 15px 20px; 
-            border-radius: 12px; 
-            margin-top: 25px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            border: 1px solid #faeaea;
-        }
-        .play-btn {
-            background: #e59a9c; 
-            color: white; 
-            width: 45px; 
-            height: 45px; 
-            border-radius: 50%; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
+        .play-toggle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--accent-pink);
+            border: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            font-size: 1.2em;
-            padding-left: 4px; /* visually centers the play triangle */
-            box-sizing: border-box;
+            font-size: 0.9rem;
+            transition: 0.2s;
         }
 
-        /* Floating decoration */
-        .character-icon {
-            font-size: 70px;
-            margin-bottom: -10px;
+        /* ---------------- SCREEN 3: POLAROID CAROUSEL ---------------- */
+        .carousel-outer {
+            width: 100%;
+            position: relative;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .polaroid-card {
+            background: white;
+            width: 290px;
+            padding: 16px 16px 20px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 0.4s ease;
+        }
+        .polaroid-card.active {
+            display: flex;
+        }
+        .polaroid-img-wrap {
+            width: 100%;
+            height: 220px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #F9F3EF;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .polaroid-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .polaroid-memory-tag {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            color: #B5A8A2;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .polaroid-caption {
+            font-family: 'Caveat', cursive;
+            font-size: 1.15rem;
+            color: #554C47;
+            line-height: 1.4;
+            min-height: 48px;
+        }
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.9);
+            border: 1px solid #F1E5E0;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            color: #7A6F69;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+        .carousel-arrow:hover { background: white; color: var(--accent-pink); }
+        .carousel-arrow.prev { left: -5px; }
+        .carousel-arrow.next { right: -5px; }
+
+        .dots-row {
+            display: flex;
+            gap: 6px;
+            margin-top: 10px;
+        }
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #E5DCD6;
+            transition: 0.3s;
+        }
+        .dot.active {
+            background: var(--accent-pink);
+            width: 16px;
+            border-radius: 8px;
+        }
+
+        /* ---------------- SCREEN 4: FLOWER WISHES (3D FLIP) ---------------- */
+        .wishes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            width: 100%;
+            margin-top: 15px;
+            perspective: 1000px;
+        }
+        .flip-card {
+            height: 250px;
+            cursor: pointer;
+        }
+        .flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 14px;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 8px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            border: 1px solid #F1E5DC;
+        }
+        .card-front {
+            background-color: #FAF4EF;
+        }
+        .flower-icon {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+        }
+        .pick-text {
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            color: #A89B95;
+            text-transform: uppercase;
+        }
+        .card-back {
+            background-color: white;
+            transform: rotateY(180deg);
+            overflow-y: auto;
+        }
+        .wish-heading {
+            font-size: 0.65rem;
+            color: var(--accent-pink);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .wish-body {
+            font-family: 'Caveat', cursive;
+            font-size: 1rem;
+            color: #4D4541;
+            line-height: 1.35;
+        }
+
+        /* ---------------- POPUP MODAL ---------------- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(40, 30, 25, 0.45);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 360px;
+            padding: 30px 24px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            animation: zoomIn 0.35s ease-out forwards;
+            position: relative;
+        }
+
+        /* ---------------- SCREEN 5: FINAL LETTER ---------------- */
+        .letter-paper {
+            background: white;
+            width: 100%;
+            padding: 32px 24px;
+            border-radius: 18px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.04);
+            text-align: left;
+            position: relative;
+            border: 1px solid #F3EAE3;
+        }
+        .letter-content {
+            font-size: 0.88rem;
+            line-height: 1.85;
+            color: #58504B;
+            margin-top: 15px;
+        }
+        .letter-content p {
+            margin-bottom: 14px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.97); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.85); }
+            to { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Screen 1: The Envelope / Landing -->
-    <div id="screen1" class="screen active">
-        <div class="subtitle">❤️ Made with so much love</div>
-        <h1>Hello Niharika</h1>
-        <div class="cursive-subtitle">happy birthday ♡</div>
-        
-        <div class="envelope-container" onclick="nextScreen('screen2')">
-            <div class="envelope">💌</div>
-            <p style="font-family: Arial; font-size: 0.8em; color: #aaa; margin-top: 15px;">(Tap the envelope to open)</p>
-        </div>
-    </div>
+    <!-- Falling Petals Background -->
+    <div class="petals-container" id="petalsBox"></div>
 
-    <!-- Screen 2: Main Birthday Message -->
-    <div id="screen2" class="screen">
-        <div class="character-icon">🐱</div>
-        <div class="subtitle" style="margin-top: 20px;">❀ HEHEEEE ❀</div>
-        <h1>Happy Birthday</h1>
-        <div class="cursive-subtitle">Niharika ♡</div>
-        
-        <div class="message-box">
-            <p>Today is yours. A whole garden of wishes, for every laugh we've shared, every silly moment, and every reason you make the world brighter. HAPPPYYYYYY BIRTHDAYYYYY NIHARIKA!</p>
-            
-            <div class="music-player">
-                <div style="text-align: left;">
-                    <strong style="color: #4A4543;">Dedicated Special Song For You</strong><br>
-                    <span style="font-size: 0.8em; color: #a38f8f; text-transform: uppercase; letter-spacing: 1px;">With Love</span>
-                </div>
-                <div class="play-btn">▶</div>
+    <!-- Hidden Background Audio (Romantic Melody) -->
+    <audio id="bgSong" loop preload="auto">
+        <source src="https://actions.google.com/sounds/v1/water/gentle_rain.ogg" type="audio/ogg">
+    </audio>
+
+    <div class="app-viewport">
+
+        <!-- ================= SCREEN 1: ENVELOPE ================= -->
+        <div id="screen1" class="screen active">
+            <div class="pill-tag">♥ Made with so much love</div>
+            <h1 class="serif-title">Hello Cutieee</h1>
+            <p class="cursive-sub">happy birthday ♡</p>
+
+            <img class="cat-gif-hero" src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif" alt="Dancing Cat">
+
+            <div class="envelope-wrapper" onclick="openEnvelope()">
+                <div class="envelope-flap" id="envFlap"></div>
+                <div class="envelope-pocket"></div>
+                <div class="wax-seal" id="waxSeal">♥</div>
             </div>
+
+            <p class="seal-instruction">Tap the seal to open ♡</p>
         </div>
-        
-        <button class="btn" onclick="nextScreen('screen3')">READ MY LETTER ♡</button>
-    </div>
-    
-    <!-- Screen 3: The Birthday Letter -->
-    <div id="screen3" class="screen">
-        <div class="character-icon">🐼</div>
-        <div class="subtitle" style="margin-top: 20px;">❀ A LETTER JUST FOR YOU ❀</div>
-        <h1>Dear Niharika,</h1>
-        
-        <div class="message-box" style="text-align: left;">
-            <p>There's no card big enough for everything I'd like to say, so I made you this little page with our memories, a song, and a few of my favourite wishes for the year ahead.</p>
-            <p>Thank you for the small and unseen things — the way you check in, the jokes only we get, the quiet patience when I'm being too much. I noticed. I still notice.</p>
-            <p>I hope today feels as gentle and special as you've always made my days feel.</p>
+
+        <!-- ================= SCREEN 2: GREETING & MUSIC ================= -->
+        <div id="screen2" class="screen">
+            <div class="avatar-circle">
+                <img src="https://media.giphy.com/media/mGkH337R9EC5Hk91gU/giphy.gif" alt="Panda Hugging Heart">
+            </div>
+            <div class="pill-tag">♥ Heheeee</div>
+            <h1 class="serif-title">Happy Birthday</h1>
+            <p class="cursive-sub">Niharika ♡</p>
+
+            <div class="note-card">
+                <p class="note-text">
+                    Today is yours. A whole garden of wishes, for every laugh we've shared, every silly moment, and every reason you make the world brighter. HAPPYYYYYY BIRTHDAYYYYY NIHARIKAAAA!
+                </p>
+
+                <div class="music-bar">
+                    <div class="music-details">
+                        <div class="music-title">Dedicated Special Song For You</div>
+                        <div class="music-sub">With Love</div>
+                    </div>
+                    <button class="play-toggle" onclick="toggleAudio()" id="playBtn">❚❚</button>
+                </div>
+                <p style="font-family: 'Caveat', cursive; color: #AC9C94; font-size: 0.95rem; margin-top: 12px;">
+                    "i picked this one, because it always reminds me of you."
+                </p>
+            </div>
+
+            <button class="primary-btn" onclick="goToScreen('screen3')">See Our Album →</button>
         </div>
-        
-        <button class="btn" onclick="nextScreen('screen1')" style="background-color: #ccc; box-shadow: none; color: #333;">Close Letter ↺</button>
+
+        <!-- ================= SCREEN 3: POLAROID CAROUSEL ================= -->
+        <div id="screen3" class="screen">
+            <div class="pill-tag">♥ Our Album</div>
+            <h1 class="serif-title">Some cool album for you</h1>
+            <p class="cursive-sub">a few of my favourite moments with you ♡</p>
+
+            <div class="carousel-outer">
+                <button class="carousel-arrow prev" onclick="moveSlide(-1)">❮</button>
+
+                <!-- Polaroid 1 -->
+                <div class="polaroid-card active" data-index="0">
+                    <div class="polaroid-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=600&q=80" alt="Flowers">
+                    </div>
+                    <div class="polaroid-memory-tag">Memory 01 / 03</div>
+                    <div class="polaroid-caption">the way you smile in every photo — i hope you know it lights up the room.</div>
+                </div>
+
+                <!-- Polaroid 2 -->
+                <div class="polaroid-card" data-index="1">
+                    <div class="polaroid-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80" alt="Celebration">
+                    </div>
+                    <div class="polaroid-memory-tag">Memory 02 / 03</div>
+                    <div class="polaroid-caption">ordinary days with you have always been my favorite ones.</div>
+                </div>
+
+                <!-- Polaroid 3 -->
+                <div class="polaroid-card" data-index="2">
+                    <div class="polaroid-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=80" alt="Balloons">
+                    </div>
+                    <div class="polaroid-memory-tag">Memory 03 / 03</div>
+                    <div class="polaroid-caption">thank you for showing up — for everything, every time.</div>
+                </div>
+
+                <button class="carousel-arrow next" onclick="moveSlide(1)">❯</button>
+            </div>
+
+            <div class="dots-row">
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+
+            <button class="primary-btn" onclick="goToScreen('screen4')">Pick A Wish →</button>
+        </div>
+
+        <!-- ================= SCREEN 4: FLOWER WISHES ================= -->
+        <div id="screen4" class="screen">
+            <div class="pill-tag">♥ Three Wishes</div>
+            <h1 class="serif-title" style="font-size: 1.8rem;">a tiny bouquet of birthday wishes</h1>
+            <p class="cursive-sub">pick each flower — there's a little wish inside ♡</p>
+
+            <div class="wishes-grid">
+                <!-- Flower 1 -->
+                <div class="flip-card" onclick="flipWish(this)">
+                    <div class="flip-inner">
+                        <div class="card-front">
+                            <div class="flower-icon">🌸</div>
+                            <div class="pick-text">Pick Me</div>
+                        </div>
+                        <div class="card-back">
+                            <div class="wish-heading">✿ The Way You Laugh ✿</div>
+                            <div class="wish-body">your laugh is one of those sounds that just makes a room feel warmer. wishing you a year full of moments that bring it out again and again.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flower 2 -->
+                <div class="flip-card" onclick="flipWish(this)">
+                    <div class="flip-inner">
+                        <div class="card-front">
+                            <div class="flower-icon">🌼</div>
+                            <div class="pick-text">Pick Me</div>
+                        </div>
+                        <div class="card-back">
+                            <div class="wish-heading">✿ The Way You Show Up ✿</div>
+                            <div class="wish-body">you remember the small things — the quiet worry, the random text on a hard day. wishing you the same softness back this year.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flower 3 -->
+                <div class="flip-card" onclick="flipWish(this)">
+                    <div class="flip-inner">
+                        <div class="card-front">
+                            <div class="flower-icon">🌷</div>
+                            <div class="pick-text">Pick Me</div>
+                        </div>
+                        <div class="card-back">
+                            <div class="wish-heading">✿ The Year Ahead ✿</div>
+                            <div class="wish-body">may this year be kinder than the last. may every new chapter bring you good food, peaceful naps, and endless warmth.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="primary-btn" onclick="showPopupModal()">Continue ♡</button>
+        </div>
+
+        <!-- ================= SCREEN 5: FINAL LETTER ================= -->
+        <div id="screen5" class="screen">
+            <div class="avatar-circle">
+                <img src="https://media.giphy.com/media/KxPBBZBPmxhVCEbLGu/giphy.gif" alt="Cute character">
+            </div>
+            <div class="pill-tag">♥ A Birthday Letter</div>
+            <h1 class="serif-title" style="font-size: 1.9rem;">Dear Niharika,</h1>
+            <p class="cursive-sub">a letter just for you ♡</p>
+
+            <div class="letter-paper">
+                <div class="letter-content">
+                    <p>There's no card big enough for everything I'd like to say, so I made you this little space — with our pictures, wishes, and a melody for the year ahead.</p>
+                    <p>Thank you for the small and unseen things — the way you check in, the jokes only we get, the quiet patience when I'm being too much. I noticed. I still notice.</p>
+                    <p>I hope today you feel celebrated and deeply loved. Wishing you the happiest of birthdays!</p>
+                </div>
+            </div>
+
+            <button class="primary-btn" onclick="celebrateFinish()" style="margin-bottom: 30px;">Send Hugs & Love 💖</button>
+        </div>
+
     </div>
 
-    <!-- JavaScript to handle screen transitions -->
+    <!-- ================= POPUP MODAL ================= -->
+    <div class="modal-overlay" id="popupModal">
+        <div class="modal-box">
+            <div class="avatar-circle" style="margin: 0 auto 12px;">
+                <img src="https://media.giphy.com/media/mGkH337R9EC5Hk91gU/giphy.gif" alt="Panda">
+            </div>
+            <h2 class="serif-title" style="font-size: 1.6rem; margin-bottom: 6px;">happy birthday ♡</h2>
+            <p style="font-size: 0.85rem; line-height: 1.6; color: #645C57; margin-bottom: 20px;">
+                thank you for being you — for the patience, the late-night talks, the silly inside jokes. i hope today feels as gentle and special as you've always made my days feel.
+            </p>
+            <button class="primary-btn" onclick="openFinalLetter()" style="margin-top: 0; width: 100%;">Read My Letter →</button>
+        </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT ================= -->
     <script>
-        function nextScreen(screenId) {
-            // Hide all screens
-            const screens = document.querySelectorAll('.screen');
-            screens.forEach(screen => {
-                screen.classList.remove('active');
-            });
-            
-            // Show the target screen and trigger animation
+        // Background Petals Generator
+        const petalsBox = document.getElementById('petalsBox');
+        for (let i = 0; i < 22; i++) {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            const size = Math.random() * 14 + 10;
+            petal.style.width = size + 'px';
+            petal.style.height = size * 1.3 + 'px';
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.animationDuration = (Math.random() * 6 + 6) + 's';
+            petal.style.animationDelay = (Math.random() * 5) + 's';
+            petalsBox.appendChild(petal);
+        }
+
+        // Screen Navigation
+        function goToScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             const target = document.getElementById(screenId);
             target.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Screen 1: Envelope Opening Animation
+        function openEnvelope() {
+            const flap = document.getElementById('envFlap');
+            const seal = document.getElementById('waxSeal');
             
-            // Scroll to top just in case
-            window.scrollTo(0, 0);
+            // Seal pops away & Flap opens in 3D
+            seal.style.transform = 'translate(-50%, -50%) scale(0)';
+            seal.style.opacity = '0';
+            flap.style.transform = 'rotateX(180deg)';
+
+            // Audio starts playing
+            const audio = document.getElementById('bgSong');
+            audio.play().catch(() => {});
+
+            // Confetti explosion
+            confetti({
+                particleCount: 80,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+
+            // Transition to Greeting Screen
+            setTimeout(() => {
+                goToScreen('screen2');
+            }, 800);
+        }
+
+        // Audio Player Controls
+        function toggleAudio() {
+            const audio = document.getElementById('bgSong');
+            const btn = document.getElementById('playBtn');
+            if (audio.paused) {
+                audio.play();
+                btn.innerText = '❚❚';
+            } else {
+                audio.pause();
+                btn.innerText = '▶';
+            }
+        }
+
+        // Screen 3: Carousel Logic
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.polaroid-card');
+        const dots = document.querySelectorAll('.dot');
+
+        function updateSlide() {
+            slides.forEach((s, idx) => {
+                s.classList.toggle('active', idx === currentSlide);
+            });
+            dots.forEach((d, idx) => {
+                d.classList.toggle('active', idx === currentSlide);
+            });
+        }
+
+        function moveSlide(dir) {
+            currentSlide = (currentSlide + dir + slides.length) % slides.length;
+            updateSlide();
+        }
+
+        // Screen 4: 3D Wish Flip
+        function flipWish(card) {
+            card.classList.toggle('flipped');
+        }
+
+        function showPopupModal() {
+            document.getElementById('popupModal').classList.add('active');
+        }
+
+        function openFinalLetter() {
+            document.getElementById('popupModal').classList.remove('active');
+            goToScreen('screen5');
+            confetti({
+                particleCount: 50,
+                spread: 60,
+                origin: { y: 0.5 }
+            });
+        }
+
+        function celebrateFinish() {
+            const duration = 3 * 1000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 3,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 }
+                });
+                confetti({
+                    particleCount: 3,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 }
+                });
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
         }
     </script>
 </body>
