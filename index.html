@@ -151,11 +151,10 @@
 
         /* ---------------- SCREEN 1: ENVELOPE ---------------- */
         .cat-gif-hero {
-            width: 90px;
-            height: 90px;
+            width: 100px;
+            height: 100px;
             margin-bottom: 15px;
             object-fit: contain;
-            border-radius: 50%;
         }
 
         .envelope-wrapper {
@@ -236,12 +235,15 @@
             padding: 5px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.06);
             margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .avatar-circle img {
-            width: 100%;
-            height: 100%;
+            width: 90%;
+            height: 90%;
             border-radius: 50%;
-            object-fit: cover;
+            object-fit: contain;
         }
 
         .note-card {
@@ -331,11 +333,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 10px;
         }
         .polaroid-img-wrap img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
         }
         .polaroid-memory-tag {
             font-size: 0.65rem;
@@ -541,7 +544,8 @@
             <h1 class="serif-title">Hello Cutieee</h1>
             <p class="cursive-sub">happy birthday ♡</p>
 
-            <img class="cat-gif-hero" src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif" alt="Dancing Cat">
+            <!-- Dancing/Standing cat meme above the envelope -->
+            <img class="cat-gif-hero" src="https://media.tenor.com/b545f4Tj_9kAAAAi/happy-cat-happy-happy-cat.gif" alt="Happy Cat">
 
             <div class="envelope-wrapper" onclick="openEnvelope()">
                 <div class="envelope-flap" id="envFlap"></div>
@@ -555,15 +559,16 @@
         <!-- ================= SCREEN 2: GREETING & MUSIC ================= -->
         <div id="screen2" class="screen">
             <div class="avatar-circle">
-                <img src="https://media.giphy.com/media/mGkH337R9EC5Hk91gU/giphy.gif" alt="Panda Hugging Heart">
+                <!-- Cute Goma cat with heart -->
+                <img src="https://media.tenor.com/qVzE2nF4U1QAAAAi/peach-goma-cat.gif" alt="Cute Cat Hugging Heart">
             </div>
             <div class="pill-tag">♥ Heheeee</div>
             <h1 class="serif-title">Happy Birthday</h1>
-            <p class="cursive-sub">Niharika ♡</p>
+            <p class="cursive-sub">My Madam Jii ♡</p>
 
             <div class="note-card">
                 <p class="note-text">
-                    Today is yours. A whole garden of wishes, for every laugh we've shared, every silly moment, and every reason you make the world brighter. HAPPYYYYYY BIRTHDAYYYYY NIHARIKAAAA!
+                    Today is yours. A whole garden of wishes, for every laugh we've shared, every silly moment, and every reason you make the world brighter. HAPPYYYYYY BIRTHDAYYYYY CUTIEEEEE!
                 </p>
 
                 <div class="music-bar">
@@ -590,28 +595,28 @@
             <div class="carousel-outer">
                 <button class="carousel-arrow prev" onclick="moveSlide(-1)">❮</button>
 
-                <!-- Polaroid 1 -->
+                <!-- Polaroid 1: Cat with Flowers -->
                 <div class="polaroid-card active" data-index="0">
                     <div class="polaroid-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=600&q=80" alt="Flowers">
+                        <img src="https://media.tenor.com/B1062u36wS0AAAAi/cat-flower.gif" alt="Cat with Flowers">
                     </div>
                     <div class="polaroid-memory-tag">Memory 01 / 03</div>
                     <div class="polaroid-caption">the way you smile in every photo — i hope you know it lights up the room.</div>
                 </div>
 
-                <!-- Polaroid 2 -->
+                <!-- Polaroid 2: Happy Happy Happy Cat -->
                 <div class="polaroid-card" data-index="1">
                     <div class="polaroid-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80" alt="Celebration">
+                        <img src="https://media.tenor.com/Fw8_4zG62yMAAAAi/cat-dance.gif" alt="Happy Happy Cat Meme">
                     </div>
                     <div class="polaroid-memory-tag">Memory 02 / 03</div>
                     <div class="polaroid-caption">ordinary days with you have always been my favorite ones.</div>
                 </div>
 
-                <!-- Polaroid 3 -->
+                <!-- Polaroid 3: Cat with Birthday Cake -->
                 <div class="polaroid-card" data-index="2">
                     <div class="polaroid-img-wrap">
-                        <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=80" alt="Balloons">
+                        <img src="https://media.tenor.com/T0TtyD24B5EAAAAi/peach-cat.gif" alt="Cat with Cake">
                     </div>
                     <div class="polaroid-memory-tag">Memory 03 / 03</div>
                     <div class="polaroid-caption">thank you for showing up — for everything, every time.</div>
@@ -685,7 +690,8 @@
         <!-- ================= SCREEN 5: FINAL LETTER ================= -->
         <div id="screen5" class="screen">
             <div class="avatar-circle">
-                <img src="https://media.giphy.com/media/KxPBBZBPmxhVCEbLGu/giphy.gif" alt="Cute character">
+                <!-- Pink cute cat for the letter -->
+                <img src="https://media.tenor.com/J70cQ7R3nsoAAAAi/cute-cat.gif" alt="Pink Cute Cat">
             </div>
             <div class="pill-tag">♥ A Birthday Letter</div>
             <h1 class="serif-title" style="font-size: 1.9rem;">Dear Niharika,</h1>
@@ -708,7 +714,8 @@
     <div class="modal-overlay" id="popupModal">
         <div class="modal-box">
             <div class="avatar-circle" style="margin: 0 auto 12px;">
-                <img src="https://media.giphy.com/media/mGkH337R9EC5Hk91gU/giphy.gif" alt="Panda">
+                <!-- Cat holding cake for modal -->
+                <img src="https://media.tenor.com/T0TtyD24B5EAAAAi/peach-cat.gif" alt="Cat holding cake">
             </div>
             <h2 class="serif-title" style="font-size: 1.6rem; margin-bottom: 6px;">happy birthday ♡</h2>
             <p style="font-size: 0.85rem; line-height: 1.6; color: #645C57; margin-bottom: 20px;">
