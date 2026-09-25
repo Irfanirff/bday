@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Niharika</title>
+    <style>
+        /* Base Styles & Background */
+        body { 
+            background-color: #FDFBF7; 
+            font-family: 'Georgia', serif; 
+            color: #4A4543; 
+            text-align: center; 
+            margin: 0; 
+            padding: 0; 
+            overflow-x: hidden;
+        }
+
+        /* Screen Transitions & Animations */
+        .screen { 
+            display: none; 
+            min-height: 100vh; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 20px; 
+            box-sizing: border-box; 
+        }
+        .screen.active { 
+            display: flex; 
+            animation: fadeInSlideUp 0.8s ease-out forwards; 
+        }
+
+        @keyframes fadeInSlideUp { 
+            0% { opacity: 0; transform: translateY(30px); } 
+            100% { opacity: 1; transform: translateY(0); } 
+        }
+
+        /* Typography */
+        h1 { 
+            font-size: 2.8em; 
+            margin-bottom: 5px; 
+            font-weight: normal; 
+            color: #3b3634;
+        }
+        .subtitle { 
+            font-family: 'Arial', sans-serif;
+            letter-spacing: 2px;
+            font-size: 0.8em; 
+            color: #bfa5a6; 
+            margin-bottom: 20px; 
+            text-transform: uppercase;
+        }
+        .cursive-subtitle {
+            font-style: italic; 
+            color: #d19597; 
+            margin-bottom: 30px; 
+            font-size: 1.5em;
+        }
+
+        /* Interactive Elements */
+        .envelope-container { 
+            cursor: pointer; 
+            transition: transform 0.3s; 
+            margin-top: 20px;
+        }
+        .envelope-container:hover { 
+            transform: scale(1.05) translateY(-5px); 
+        }
+        .envelope { 
+            font-size: 120px; 
+            margin: 0; 
+            filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.05));
+        }
+
+        .btn { 
+            background-color: #e59a9c; 
+            color: white; 
+            border: none; 
+            padding: 15px 30px; 
+            border-radius: 30px; 
+            font-size: 1em; 
+            cursor: pointer; 
+            margin-top: 30px; 
+            transition: background 0.3s, transform 0.2s; 
+            box-shadow: 0 4px 15px rgba(229, 154, 156, 0.4);
+            font-family: 'Arial', sans-serif;
+            letter-spacing: 1px;
+        }
+        .btn:hover { 
+            background-color: #d18587; 
+            transform: scale(1.05);
+        }
+
+        /* Message Boxes & UI Components */
+        .message-box { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03); 
+            max-width: 450px; 
+            line-height: 1.8; 
+            font-family: 'Arial', sans-serif;
+            font-size: 0.95em;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        .music-player { 
+            background: #fdf6f6; 
+            padding: 15px 20px; 
+            border-radius: 12px; 
+            margin-top: 25px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            border: 1px solid #faeaea;
+        }
+        .play-btn {
+            background: #e59a9c; 
+            color: white; 
+            width: 45px; 
+            height: 45px; 
+            border-radius: 50%; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            cursor: pointer;
+            font-size: 1.2em;
+            padding-left: 4px; /* visually centers the play triangle */
+            box-sizing: border-box;
+        }
+
+        /* Floating decoration */
+        .character-icon {
+            font-size: 70px;
+            margin-bottom: -10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Screen 1: The Envelope / Landing -->
+    <div id="screen1" class="screen active">
+        <div class="subtitle">❤️ Made with so much love</div>
+        <h1>Hello Niharika</h1>
+        <div class="cursive-subtitle">happy birthday ♡</div>
+        
+        <div class="envelope-container" onclick="nextScreen('screen2')">
+            <div class="envelope">💌</div>
+            <p style="font-family: Arial; font-size: 0.8em; color: #aaa; margin-top: 15px;">(Tap the envelope to open)</p>
+        </div>
+    </div>
+
+    <!-- Screen 2: Main Birthday Message -->
+    <div id="screen2" class="screen">
+        <div class="character-icon">🐱</div>
+        <div class="subtitle" style="margin-top: 20px;">❀ HEHEEEE ❀</div>
+        <h1>Happy Birthday</h1>
+        <div class="cursive-subtitle">Niharika ♡</div>
+        
+        <div class="message-box">
+            <p>Today is yours. A whole garden of wishes, for every laugh we've shared, every silly moment, and every reason you make the world brighter. HAPPPYYYYYY BIRTHDAYYYYY NIHARIKA!</p>
+            
+            <div class="music-player">
+                <div style="text-align: left;">
+                    <strong style="color: #4A4543;">Dedicated Special Song For You</strong><br>
+                    <span style="font-size: 0.8em; color: #a38f8f; text-transform: uppercase; letter-spacing: 1px;">With Love</span>
+                </div>
+                <div class="play-btn">▶</div>
+            </div>
+        </div>
+        
+        <button class="btn" onclick="nextScreen('screen3')">READ MY LETTER ♡</button>
+    </div>
+    
+    <!-- Screen 3: The Birthday Letter -->
+    <div id="screen3" class="screen">
+        <div class="character-icon">🐼</div>
+        <div class="subtitle" style="margin-top: 20px;">❀ A LETTER JUST FOR YOU ❀</div>
+        <h1>Dear Niharika,</h1>
+        
+        <div class="message-box" style="text-align: left;">
+            <p>There's no card big enough for everything I'd like to say, so I made you this little page with our memories, a song, and a few of my favourite wishes for the year ahead.</p>
+            <p>Thank you for the small and unseen things — the way you check in, the jokes only we get, the quiet patience when I'm being too much. I noticed. I still notice.</p>
+            <p>I hope today feels as gentle and special as you've always made my days feel.</p>
+        </div>
+        
+        <button class="btn" onclick="nextScreen('screen1')" style="background-color: #ccc; box-shadow: none; color: #333;">Close Letter ↺</button>
+    </div>
+
+    <!-- JavaScript to handle screen transitions -->
+    <script>
+        function nextScreen(screenId) {
+            // Hide all screens
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show the target screen and trigger animation
+            const target = document.getElementById(screenId);
+            target.classList.add('active');
+            
+            // Scroll to top just in case
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
